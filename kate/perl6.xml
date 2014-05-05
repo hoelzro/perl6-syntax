@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE language SYSTEM "language.dtd">
+<language name="Perl6" version="0.01" kateversion="2.4" section="Scripts" extensions="*.pl;*.PL;*.pm;*.pl6;*.p6;*.p6m;*.pm6;*.nqp" mimetype="application/x-perl;text/x-perl" priority="5" author="Timo Paulssen" license="zlib">
+  <highlighting>
+    <list name="keywords">
+      <!-- phasers -->
+      <item> BEGIN </item> <item> CATCH </item><item> CHECK </item> <item> CONTROL </item> <item> END </item>
+      <item> ENTER </item> <item> FIRST </item><item> INIT  </item> <item> KEEP    </item> <item> LAST </item>
+      <item> LEAVE </item> <item> NEXT </item> <item> POST  </item> <item> PRE     </item> <item> START </item>
+      <item> TEMP  </item> <item> UNDO </item>
+      <!-- control flow -->
+      <item> continue </item> <item> die    </item> <item> do     </item> <item> else   </item> <item> elsif </item>
+      <item> fail     </item> <item> fatal  </item> <item> for    </item> <item> gather </item> <item> given </item>
+      <item> goto     </item> <item> exit   </item> <item> if     </item> <item> last   </item> <item> leave </item>
+      <item> let      </item> <item> lift   </item> <item> loop   </item> <item> next   </item> <item> redo </item>
+      <item> repeat   </item> <item> return </item> <item> take   </item> <item> try    </item> <item> unless </item>
+      <item> until    </item> <item> when   </item> <item> while  </item> <item> break  </item> <item> my </item>
+      <item> of       </item> <item> only   </item> <item> our    </item> <item> package</item>
+      <!-- definitions and stuff -->
+      <item> as      </item> <item> augment </item> <item> class   </item> <item> constant </item><item> enum </item>
+      <item> grammar </item> <item> has     </item> <item> handles </item> <item> is      </item> <item> macro </item>
+      <item> method  </item> <item> module  </item> <item> proto   </item> <item> multi   </item> <item> role </item>
+      <item> rule    </item> <item> regex   </item> <item> token   </item> <item> sub     </item> <item> submethod </item>
+      <item> subset  </item> <item> slang   </item> <item> temp    </item> <item> state   </item> <item> supersede </item>
+      <!-- traits -->
+      <item> assoc    </item> <item> but     </item> <item> will     </item> <item> cached  </item> <item> copy </item>
+      <item> default  </item> <item> equiv   </item> <item> looser   </item> <item> tighter </item> <item> export </item>
+      <item> inline   </item> <item> parsed  </item> <item> readonly </item> <item> rw      </item> <item> prec </item>
+      <item> required </item> <item> returns </item> <item> trusts   </item>
+      <!-- assorted -->
+      <item> async    </item> <item> binary </item> <item> category </item> <item> contend </item> <item> deep </item>
+      <item> defequiv </item> <item> defer  </item> <item> irs      </item> <item> make    </item> <item> maybe </item>
+      <item> ofs      </item> <item> oo     </item> <item> ors      </item> <item> ref     </item> <item> reparsed </item>
+      <item> require  </item> <item> self   </item> <item> unary    </item> <item> use     </item> <item> warn </item>
+      <item> where    </item>
+    </list>
+    <list name="operators">
+      <!-- 
+        perl6-m -e 'for OUTER::OUTER::.keys()
+             .grep(/^\&/)
+             .grep(-> $name { $name ~~ /infix|prefix|postfix/})
+             .map({ /":<" <( .*? )> ">"$/; ~$/ })
+             .map({"<item> " ~ $^a ~ " " x (5 - $a.chars) ~ " </item>"})
+             -> $a, $b?, $c?, $d? { say $a, $b, $c, $d }'
+      -->
+      <item> ~~    </item><item> =:=   </item><item> eqv   </item><item> ~     </item>
+      <item> ~     </item><item> x     </item><item> leg   </item><item> eq    </item>
+      <item> ne    </item><item> lt    </item><item> le    </item><item> gt    </item>
+      <item> ge    </item><item> ~|    </item><item> ~^    </item><item> ~&amp;    </item>
+      <item> ~^    </item><item> ===   </item><item> before </item><item> after </item>
+      <item> ++    </item><item> --    </item><item> ++    </item><item> --    </item>
+      <item> min   </item><item> max   </item><item> minmax </item><item> |     </item>
+      <item> &amp;&amp; </item><item> ^     </item><item> ?     </item><item> so    </item>
+      <item> !     </item><item> not   </item><item> ?^    </item><item> ?&amp;    </item>
+      <item> ?|    </item><item> ?^    </item><item> &amp;    </item><item> ||    </item>
+      <item> ^^    </item><item> //    </item><item> and   </item><item> or    </item>
+      <item> xor   </item><item> orelse </item><item> +     </item><item> -     </item>
+      <item> +     </item><item> -     </item><item> *     </item><item> /     </item>
+      <item> div   </item><item> %     </item><item> %%    </item><item> lcm   </item>
+      <item> gcd   </item><item> **    </item><item> &lt;=>   </item><item> ==    </item>
+      <item> !=    </item><item> &lt;     </item><item> &lt;=    </item><item> >     </item>
+      <item> >=    </item><item> +&amp;    </item><item> +|    </item><item> +^    </item>
+      <item> +&lt;    </item><item> +>    </item><item> +^    </item><item> mod   </item>
+      <item> cmp   </item><item> ~>    </item><item> ~&lt;    </item><item> ,     </item>
+      <item> ..    </item><item> ^..   </item><item> ..^   </item><item> ^..^  </item>
+      <item> ^     </item><item> xx    </item><item> X     </item><item> Z     </item>
+      <item> =>    </item><item> i     </item><item> (elem) </item><item> ∈     </item>
+      <item> ∉     </item><item> (cont) </item><item> ∋     </item><item> ∌     </item>
+      <item> (|)   </item><item> ∪     </item><item> (&amp;)   </item><item> ∩     </item>
+      <item> (-)   </item><item> ∖     </item><item> (^)   </item><item> ⊖     </item>
+      <item> (&lt;=)  </item><item> ⊆     </item><item> ⊈     </item><item> (&lt;)   </item>
+      <item> ⊂     </item><item> ⊄     </item><item> (>=)  </item><item> ⊇     </item>
+      <item> ⊉     </item><item> (>)   </item><item> ⊃     </item><item> ⊅     </item>
+      <item> (.)   </item><item> ⊍     </item><item> (+)   </item><item> ⊎     </item>
+      <item> (&lt;+)  </item><item> ≼     </item><item> (>+)  </item><item> ≽     </item>
+      <item> =     </item><item> does  </item><item> but   </item><item> ...   </item>
+      <item> ...^  </item><item> temp  </item><item> let   </item><item> andthen </item>
+      <item> :=    </item>
+    </list>
+    <list name="functions">
+      <!-- 
+      my @fun = OUTER::OUTER::.keys();
+      @fun .= grep(/^\&/);
+      @fun .= grep(-> $name { $name !~~ /":<" .*? ">"/});
+      @fun .= grep(/<[a..z]>/);
+      @fun .= map(*.substr(1));
+      @fun .= map({"<item> " ~ $^a ~ " " x (8 - $a.chars) ~ " </item>"});
+      for @fun -> $a, $b?, $c?, $d? { say $a, $b, $c, $d }
+        -->
+      <item> fail     </item><item> zip      </item><item> samewith </item><item> lastcall </item>
+      <item> nextsame </item><item> callsame </item><item> nextwith </item><item> callwith </item>
+      <item> proceed  </item><item> succeed  </item><item> redo     </item><item> next     </item>
+      <item> last     </item><item> take     </item><item> take-rw  </item><item> return   </item>
+      <item> return-rw </item><item> die      </item><item> warn     </item><item> eval     </item>
+      <item> exit     </item><item> run      </item><item> shell    </item><item> defined  </item>
+      <item> min      </item><item> max      </item><item> minmax   </item><item> map      </item>
+      <item> grep     </item><item> first    </item><item> join     </item><item> pick     </item>
+      <item> roll     </item><item> keys     </item><item> values   </item><item> pairs    </item>
+      <item> kv       </item><item> elems    </item><item> end      </item><item> classify </item>
+      <item> categorize </item><item> uniq     </item><item> squish   </item><item> sort     </item>
+      <item> item     </item><item> any      </item><item> all      </item><item> one      </item>
+      <item> none     </item><item> ucfirst  </item><item> chop     </item><item> chomp    </item>
+      <item> flip     </item><item> index    </item><item> lc       </item><item> ord      </item>
+      <item> substr   </item><item> uc       </item><item> tc       </item><item> tclc     </item>
+      <item> rindex   </item><item> ords     </item><item> comb     </item><item> wordcase </item>
+      <item> sprintf  </item><item> printf   </item><item> samecase </item><item> split    </item>
+      <item> chars    </item><item> abs      </item><item> sign     </item><item> log      </item>
+      <item> log10    </item><item> exp      </item><item> sin      </item><item> asin     </item>
+      <item> cos      </item><item> acos     </item><item> tan      </item><item> atan     </item>
+      <item> sec      </item><item> asec     </item><item> cosec    </item><item> acosec   </item>
+      <item> cotan    </item><item> acotan   </item><item> sinh     </item><item> asinh    </item>
+      <item> cosh     </item><item> acosh    </item><item> tanh     </item><item> atanh    </item>
+      <item> sech     </item><item> asech    </item><item> cosech   </item><item> acosech  </item>
+      <item> cotanh   </item><item> acotanh  </item><item> sqrt     </item><item> roots    </item>
+      <item> floor    </item><item> ceiling  </item><item> round    </item><item> cis      </item>
+      <item> truncate </item><item> atan2    </item><item> unpolar  </item><item> chr      </item>
+      <item> is-prime </item><item> expmod   </item><item> lsb      </item><item> msb      </item>
+      <item> Increase </item><item> Decrease </item><item> rand     </item><item> srand    </item>
+      <item> pack     </item><item> trim     </item><item> trim-leading </item><item> trim-trailing </item>
+      <item> unbase   </item><item> unbase_bracket </item><item> chrs     </item><item> substr-rw </item>
+      <item> combinations </item><item> permutations </item><item> eager    </item><item> flat     </item>
+      <item> list     </item><item> pop      </item><item> shift    </item><item> unshift  </item>
+      <item> push     </item><item> reverse  </item><item> rotate   </item><item> reduce   </item>
+      <item> splice   </item><item> roundrobin </item><item> hash     </item><item> make     </item>
+      <item> print    </item><item> say      </item><item> note     </item><item> gist     </item>
+      <item> prompt   </item><item> dir      </item><item> unlink   </item><item> rmdir    </item>
+      <item> open     </item><item> lines    </item><item> get      </item><item> getc     </item>
+      <item> close    </item><item> slurp    </item><item> spurt    </item><item> cwd      </item>
+      <item> chdir    </item><item> mkdir    </item><item> rename   </item><item> copy     </item>
+      <item> symlink  </item><item> link     </item><item> chmod    </item><item> callframe </item>
+      <item> default-formatter </item><item> get-local-timezone-offset </item><item> sleep    </item><item> sleep-timer </item>
+      <item> sleep-till </item><item> set      </item><item> bag      </item><item> mix      </item>
+      <item> undefine </item><item> hyper    </item><item> gethostname </item>
+    </list>
+    <list name="classes">
+      <item> Mu       </item><item> Any      </item><item> Cool     </item><item> Nil      </item>
+      <item> Code     </item><item> Block    </item><item> Routine  </item><item> Sub      </item>
+      <item> Method   </item><item> Regex    </item><item> Str      </item><item> Int      </item>
+      <item> Num      </item><item> Parcel   </item><item> List     </item><item> Array    </item>
+      <item> LoL      </item><item> EnumMap  </item><item> Hash     </item><item> Capture  </item>
+      <item> ObjAt    </item><item> Stash    </item><item> Scalar   </item><item> Proxy    </item>
+      <item> Grammar  </item><item> PROCESS  </item><item> Bool     </item><item> False    </item>
+      <item> True     </item><item> Pair     </item><item> X        </item><item> Seq      </item>
+      <item> FatRat   </item><item> Enum     </item><item> Setty    </item><item> Set      </item>
+      <item> SetHash  </item><item> Baggy    </item><item> Bag      </item><item> BagHash  </item>
+      <item> Mixy     </item><item> Mix      </item><item> MixHash  </item><item> Proc     </item>
+      <item> Stringy  </item><item> MapIter  </item><item> Range    </item><item> Macro    </item>
+      <item> IO       </item><item> Numeric  </item><item> Complex  </item><item> Real     </item>
+      <item> Rat      </item><item> Less     </item><item> Same     </item><item> More     </item>
+      <item> Order    </item><item> UInt64   </item><item> Blob     </item><item> Buf      </item>
+      <item> Cursor   </item><item> Match    </item><item> Failure  </item><item> AST      </item>
+      <item> Instant  </item><item> Date     </item><item> Dateish  </item><item> Pod      </item>
+      <item> Version  </item>
+      <item> Attribute </item><item> Signature </item><item> Parameter </item><item> Submethod </item>
+      <item> Iterable </item><item> Iterator </item><item> ListIter </item><item> Junction </item>
+      <item> ContainerDescriptor </item><item> MethodDispatcher </item><item> MultiDispatcher </item><item> WrapDispatcher </item>
+      <item> Metamodel </item><item> ForeignCode </item><item> NQPCursorRole </item><item> Whatever </item>
+      <item> WhateverCode </item><item> Positional </item><item> Associative </item><item> Callable </item>
+      <item> Exception </item><item> QuantHash </item><item> PseudoStash </item><item> Variable </item>
+      <item> HardRoutine </item><item> SoftRoutine </item><item> SprintfHandler </item><item> Enumeration </item>
+      <item> NumericEnumeration </item><item> StringyEnumeration </item><item> GatherIter </item><item> HashIter </item>
+      <item> Rational </item><item> Backtrace </item><item> CallFrame </item><item> Duration </item>
+      <item> DateTime </item><item> TimeUnit </item><item> EXPORTHOW </item><item> Deprecation </item>
+      <item> int </item> <item> num </item> <item> str </item>
+    </list>
+    <list name="pragmas">
+      <item>soft</item>
+      <item>v6</item>
+      <item>fatal</item>
+      <item>MONKEY_TYPING</item>
+    </list>
+    <contexts>
+      <context name="normal" attribute="Normal Text">
+        <keyword attribute="Keyword" context="#stay" String="keywords"/>
+        <keyword attribute="Operator" context="#stay" String="operators"/>
+        <keyword attribute="Function" context="#stay" String="functions"/>
+        <keyword attribute="Data Type" context="#stay"  String="classes"/>
+
+        <RegExpr attribute="Data Type" context="#stay" String="(([a-zA-Z][a-zA-Z0-9_-]*)?::)+([a-zA-Z][a-zA-Z0-9_-]*)?" />
+        
+        <DetectChar attribute="Special Variable" context="var" char="$" />
+        <DetectChar attribute="Special Variable" context="var" char="%" />
+        <DetectChar attribute="Special Variable" context="var" char="&amp;" />
+        <DetectChar attribute="Special Variable" context="var" char="@" />
+
+        <DetectChar attribute="Comment" context="comment" char="#" />
+        
+        <RangeDetect attribute="String" char="'" char1="'" context="#stay" />
+        <RangeDetect attribute="String" char="&quot;" char1="&quot;" context="#stay" />
+        <RangeDetect attribute="String" char="&lt;" char1="&gt;" context="#stay" />
+        <RangeDetect attribute="String" char="«" char1="»" context="#stay" />
+      </context>
+      <context name="var">
+        <DetectChar attribute="Operator" context="desigilvar" char="*" /> <!-- dynamic var -->
+        <DetectChar attribute="Operator" context="desigilvar" char="=" /> <!-- POD var -->
+        <DetectChar attribute="Operator" context="desigilvar" char="?" /> <!-- compile-time var -->
+        <DetectChar attribute="Operator" context="desigilvar" char="!" /> <!-- private attribute -->
+        <DetectChar attribute="Operator" context="desigilvar" char="." /> <!-- public attribute -->
+        <RegExpr context="#pop" attribute="Special Variable" String="[a-zA-Z0-9_]([a-zA-Z0-9_'-]+[a-zA-Z0-9_])+" />
+      </context>
+      <context name="desigilvar">
+        <RegExpr context="#pop#pop" attribute="Special Variable" String="[a-zA-Z0-9_]([a-zA-Z0-9_'-]+[a-zA-Z0-9_])+" />
+      </context>
+      <context name="comment" attribute="Comment" lineEndContext="#pop">
+        <DetectSpaces />
+        <IncludeRules context="##Alerts" />
+        <DetectIdentifier />
+      </context>
+    </contexts>
+    <itemDatas>
+      <itemData name="Normal Text"               defStyleNum="dsNormal" />
+      <itemData name="Keyword"                   defStyleNum="dsKeyword" />
+      <itemData name="Pragma"                    defStyleNum="dsKeyword" />
+      <itemData name="Function"                  defStyleNum="dsFunction" />
+      <itemData name="Operator"                  defStyleNum="dsKeyword" color="#008000"/>
+      <itemData name="Data Type"                 defStyleNum="dsDataType" />
+      <itemData name="Special Variable"          defStyleNum="dsDataType" color="#C00000" selColor="#C00000" bold="0" italic="0" />
+      <itemData name="Decimal"                   defStyleNum="dsDecVal" />
+      <itemData name="Octal"                     defStyleNum="dsBaseN" />
+      <itemData name="Hex"                       defStyleNum="dsBaseN" />
+      <itemData name="Bin"                       defStyleNum="dsBaseN" />
+      <itemData name="Float"                     defStyleNum="dsFloat" />
+      <itemData name="String"                    defStyleNum="dsString" color="#FF6C6C" selColor="#FF6C6C" bold="0" italic="0" />
+      <itemData name="String (interpolated)"     defStyleNum="dsString" />
+      <itemData name="String Special Character"  defStyleNum="dsChar" />
+      <itemData name="Pattern"                   defStyleNum="dsOthers" />
+      <itemData name="Pattern Internal Operator" defStyleNum="dsChar" />
+      <itemData name="Pattern Character Class"   defStyleNum="dsBaseN" />
+      <itemData name="Data"                      defStyleNum="dsNormal" />
+      <itemData name="Comment"                   defStyleNum="dsComment" />
+      <itemData name="Pod"                       defStyleNum="dsComment" />
+      <itemData name="Nothing"                   defStyleNum="dsComment" />
+    </itemDatas>
+  </highlighting>
+  <general>
+    <comments>
+      <comment name="singleLine" start="#" />
+    </comments>
+    <keywords casesensitive="1" />
+  </general>
+</language>
+<!-- kate: space-indent on; indent-width 2; replace-tabs on; -->
