@@ -1,0 +1,2 @@
+  - Build syntax files out of templates/data from Perl 6 environment
+  - Test suite
