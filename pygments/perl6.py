@@ -3,6 +3,10 @@
 # XXX WARNING!  Do NOT use this file on its own!  It is meant to be included into
 #     pygments/lexers/agile.py in the pygments project
 
+import re
+from pygments.lexer import ExtendedRegexLexer, bygroups, include, using, this
+from pygments.token import Comment, Keyword, Name, Text, String, Number, Operator
+
 class Perl6Lexer(ExtendedRegexLexer):
     """
     For `Perl 6 <http://www.perl6.org>`_ source code.
