@@ -1,6 +1,8 @@
 import sys
+import os
 
-# XXX check for python 2
+if sys.version_info.major != 2:
+    raise Exception('Python 2 is required to run the pygments tests')
 
 sys.path.insert(0, 'pygments')
 
