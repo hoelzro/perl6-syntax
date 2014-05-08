@@ -1,5 +1,6 @@
 import sys
 import os
+import tempfile
 
 if sys.version_info.major != 2:
     raise Exception('Python 2 is required to run the pygments tests')
@@ -22,5 +23,18 @@ def generate():
     for path in file_list():
         code        = open(path, 'r').read()
         highlighted = pygments.highlight(code, lexer, formatter)
-        # XXX stick highlighted somewhere...
+        yield path, highlighted
 
+def update():
+    generated_dir = tempfile.mkdtemp()
+    for path, highlighted in generate():
+        parent = os.path.dirname(os.path.join(generated_dir, path))
+        if not os.path.exists(parent):
+            os.makedirs(parent)
+        open(os.path.join(generated_dir, path + '.html'), 'w').write(highlighted)
+    # XXX do something with generated_dir
+
+def verify():
+    pass
+
+update()
