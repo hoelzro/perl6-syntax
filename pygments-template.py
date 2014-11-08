@@ -4,6 +4,8 @@ import re
 from pygments.lexer import ExtendedRegexLexer, bygroups, default, include, using, this
 from pygments.token import Comment, Keyword, Name, Text, String, Number, Operator
 
+__all__ = ['Perl6Lexer']
+
 class Perl6Lexer(ExtendedRegexLexer):
     """
     For `Perl 6 <http://www.perl6.org>`_ source code.
