@@ -41,9 +41,7 @@ my $BLACKLIST = Set.new(<
 
 my @BUILTIN_CLASSES = %stash.keys\
     .grep(/^ \w+ $/)\
-    .grep({ !$BLACKLIST{$_} })\
-    .grep({ %stash{$_}.WHICH eqv %stash{$_}.WHAT.WHICH });
-@BUILTIN_CLASSES.push: @($BLACKLIST);
+    .grep({ $BLACKLIST{$_} || %stash{$_}.WHICH eqv %stash{$_}.WHAT.WHICH });
 
 my @BUILTIN_OPERATORS = %stash.keys\
     .grep(/^ '&'/)\
