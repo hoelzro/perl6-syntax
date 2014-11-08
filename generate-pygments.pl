@@ -27,7 +27,8 @@ my @BUILTIN_FUNCTIONS = %stash.keys\
     .grep(/^ '&'/)\
     .grep(-> $name { $name !~~ /":<" .*? ">"/})\
     .grep(/<[a..z]>/)\
-    .map(*.substr(1));
+    .map(*.substr(1))\
+    .sort;
 
 my $BLACKLIST = Set.new(<
     ContainerDescriptor
@@ -41,12 +42,14 @@ my $BLACKLIST = Set.new(<
 
 my @BUILTIN_CLASSES = %stash.keys\
     .grep(/^ \w+ $/)\
-    .grep({ $BLACKLIST{$_} || %stash{$_}.WHICH eqv %stash{$_}.WHAT.WHICH });
+    .grep({ $BLACKLIST{$_} || %stash{$_}.WHICH eqv %stash{$_}.WHAT.WHICH })\
+    .sort;
 
 my @BUILTIN_OPERATORS = %stash.keys\
     .grep(/^ '&'/)\
     .grep(-> $name { $name ~~ /infix|prefix|postfix/})\
-    .map({ /":<" <( .*? )> ">"$/; ~$/ });
+    .map({ /":<" <( .*? )> ">"$/; ~$/ })\
+    .sort;
 
 constant $INDENT          = 8;
 constant $MAX-LINE-LENGTH = 79;
