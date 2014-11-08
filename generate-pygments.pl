@@ -13,7 +13,7 @@ my @KEYWORDS = <
     copy deep default defequiv defer die do else
     elsif enum equiv exit export fail fatal for
     gather given goto grammar handles has if inline
-    irs is last leave let lift loop looser macro
+    irs is last leave let loop looser macro
     make maybe method module multi my next of
     ofs only oo ors our package parsed prec
     proto readonly redo ref regex reparsed repeat
