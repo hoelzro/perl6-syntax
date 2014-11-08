@@ -72,7 +72,7 @@ sub python-list(@values) {
     @lines.map(*.trim-trailing).join("\n") ~ "\n"
 }
 
-my $template = slurp 'pygments-template.py';
+my $template = slurp 'templates/pygments.py';
 
 print Template::Mustache.render($template, {
     KEYWORDS          => python-list(@KEYWORDS),
