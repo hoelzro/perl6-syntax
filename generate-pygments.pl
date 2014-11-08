@@ -10,17 +10,17 @@ my @KEYWORDS = <
     KEEP LAST LEAVE NEXT POST PRE START TEMP
     UNDO as assoc async augment binary break but
     cached category class constant contend continue
-    copy deep default defequiv defer die do else
-    elsif enum equiv exit export fail fatal for
+    copy deep default defequiv defer die do done else
+    elsif emit enum equiv exit export fail fatal for
     gather given goto grammar handles has if inline
     irs is last leave let loop looser macro
     make maybe method module multi my next of
     ofs only oo ors our package parsed prec
-    proto readonly redo ref regex reparsed repeat
+    proto quit readonly redo ref regex reparsed repeat
     require required return returns role rule rw
     self slang state sub submethod subset supersede
     take temp tighter token trusts try unary
-    unless until use warn when where while will
+    unless until use wait warn when where while will
 >;
 
 my @BUILTIN_FUNCTIONS = %stash.keys\
