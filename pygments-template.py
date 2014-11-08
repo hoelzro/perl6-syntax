@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import re
 from pygments.lexer import ExtendedRegexLexer, bygroups, include, using, this
 from pygments.token import Comment, Keyword, Name, Text, String, Number, Operator
