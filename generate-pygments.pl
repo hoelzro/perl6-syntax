@@ -3,7 +3,7 @@
 use v6;
 use Template::Mustache;
 
-my %stash = OUTER::OUTER::;
+my %stash := OUTER::OUTER::;
 
 my @KEYWORDS = <
     BEGIN CATCH CHECK CONTROL END ENTER FIRST INIT
