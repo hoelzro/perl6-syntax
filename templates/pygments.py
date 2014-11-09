@@ -213,79 +213,121 @@ class Perl6Lexer(ExtendedRegexLexer):
     # them, make sure you also process the corresponding one!
     tokens = {
         'common': [
+            # block/declarator comments
             (r'#[`|=](?P<delimiter>(?P<first_char>[' + ''.join(PERL6_BRACKETS) + r'])(?P=first_char)*)',
              brackets_callback(Comment.Multiline)),
+            # single line comments
             (r'#[^\n]*$', Comment.Single),
+            # POD
             (r'^(\s*)=begin\s+(\w+)\b.*?^\1=end\s+\2', Comment.Multiline),
+            # POD (paragraph)
             (r'^(\s*)=for.*?\n\s*?\n', Comment.Multiline),
+            # POD (abbreviated)
             (r'^=.*?\n\s*?\n', Comment.Multiline),
+            # regex something:sym<...>
             (r'(regex|token|rule)(\s*' + PERL6_IDENTIFIER_RANGE + '+:sym)',
              bygroups(Keyword, Name), 'token-sym-brackets'),
+            # regex
             (r'(regex|token|rule)(?!' + PERL6_IDENTIFIER_RANGE + ')(\s*' + PERL6_IDENTIFIER_RANGE + '+)?',
              bygroups(Keyword, Name), 'pre-token'),
             # deal with a special case in the Perl 6 grammar (role q { ... })
             (r'(role)(\s+)(q)(\s*)', bygroups(Keyword, Text, Name, Text)),
+            # keyword match
             (_build_word_match(PERL6_KEYWORDS, PERL6_IDENTIFIER_RANGE), Keyword),
+            # builtin class match
             (_build_word_match(PERL6_BUILTIN_CLASSES, PERL6_IDENTIFIER_RANGE, suffix='(?::[UD])?'),
              Name.Builtin),
+            # builtin function match
             (_build_word_match(PERL6_BUILTINS, PERL6_IDENTIFIER_RANGE), Name.Builtin),
             # copied from PerlLexer
+            # variable match (plus optional literal string field access, ie. %foo<key>)
             (r'[$@%&][.^:?=!~]?' + PERL6_IDENTIFIER_RANGE + u'+(?:<<.*?>>|<.*?>|«.*?»)*',
              Name.Variable),
+            # special case for $! and $/ plus optional field access
             (r'\$[!/](?:<<.*?>>|<.*?>|«.*?»)*', Name.Variable.Global),
+            # special globals (ex. ::?CLASS)
             (r'::\?\w+', Name.Variable.Global),
+            # dynamic variables (ex. $*OUT) plus optional field access
             (r'[$@%&]\*' + PERL6_IDENTIFIER_RANGE + u'+(?:<<.*?>>|<.*?>|«.*?»)*',
              Name.Variable.Global),
+            # shorthand access for $/ ($<foo>)
             (r'\$(?:<.*?>)+', Name.Variable),
+            # special quote forms (ex. qq{...})
             (r'(?:q|qq|Q)[a-zA-Z]?\s*(?P<adverbs>:[\w\s:]+)?\s*(?P<delimiter>(?P<first_char>[^0-9a-zA-Z:\s])'
              r'(?P=first_char)*)', brackets_callback(String)),
             # copied from PerlLexer
+            # octal number
             (r'0_?[0-7]+(_[0-7]+)*', Number.Oct),
+            # hexidecimal number
             (r'0x[0-9A-Fa-f]+(_[0-9A-Fa-f]+)*', Number.Hex),
+            # binary number
             (r'0b[01]+(_[01]+)*', Number.Bin),
+            # floating point number
             (r'(?i)(\d*(_\d*)*\.\d+(_\d*)*|\d+(_\d*)*\.\d+(_\d*)*)(e[+-]?\d+)?',
              Number.Float),
+            # floating point number
             (r'(?i)\d+(_\d*)*e[+-]?\d+(_\d*)*', Number.Float),
+            # integer
             (r'\d+(_\d+)*', Number.Integer),
+            # regex literal
             (r'(?<=~~)\s*/(?:\\\\|\\/|.)*?/', String.Regex),
+            # regex literal
             (r'(?<=[=(,])\s*/(?:\\\\|\\/|.)*?/', String.Regex),
+            # special case for identifiers (to make sure the following rule doesn't pick it up)
             (r'm\w+(?=\()', Name),
+            # m/.../, rx/.../ forms of regex literals
             (r'(?:m|ms|rx)\s*(?P<adverbs>:[\w\s:]+)?\s*(?P<delimiter>(?P<first_char>[^\w:\s])'
              r'(?P=first_char)*)', brackets_callback(String.Regex)),
+            # s/.../.../, tr/.../.../ forms of regex literals
             (r'(?:s|ss|tr)\s*(?::[\w\s:]+)?\s*/(?:\\\\|\\/|.)*?/(?:\\\\|\\/|.)*?/',
              String.Regex),
+            # <...> parcel literal
             (r'<[^\s=].*?\S>', String),
+            # builtin operators
             (_build_word_match(PERL6_OPERATORS), Operator),
+            # identifiers
             (r'\w' + PERL6_IDENTIFIER_RANGE + '*', Name),
+            # double quoted string
             (r"'(\\\\|\\[^\\]|[^'\\])*'", String),
+            # single quoted string
             (r'"(\\\\|\\[^\\]|[^"\\])*"', String),
         ],
+        # sometimes Perl 6 can have Perl 6 code embedded in another context
+        # (ex. Perl 6 code in a regex in Perl 6 code); this handles that
         'root': [
             include('common'),
             (r'\{', opening_brace_callback),
             (r'\}', closing_brace_callback),
             (r'.+?', Text),
         ],
+        # handles stuff before entering the token sublanguage
         'pre-token': [
             include('common'),
             (r'\{', Text, ('#pop', 'token')),
             (r'.+?', Text),
         ],
+        # handles stuff before entering the token sublanguage
         'token-sym-brackets': [
             (r'(?P<delimiter>(?P<first_char>[' + ''.join(PERL6_BRACKETS) + '])(?P=first_char)*)',
              brackets_callback(Name), ('#pop', 'pre-token')),
             default(('#pop', 'pre-token')),
         ],
+        # handles the token sublanguage
         'token': [
+            # return to Perl 6
             (r'\}', Text, '#pop'),
+            # single line declaration
             (r'(?<=:)(?:my|our|state|constant|temp|let).*?;', using(this)),
             # make sure that quotes in character classes aren't treated as strings
             (r'<(?:[-!?+.]\s*)?\[.*?\]>', String.Regex),
             # make sure that '#' characters in quotes aren't treated as comments
             (r"(?<!\\)'(\\\\|\\[^\\]|[^'\\])*'", String.Regex),
             (r'(?<!\\)"(\\\\|\\[^\\]|[^"\\])*"', String.Regex),
+            # comments
             (r'#.*?$', Comment.Single),
+            # embedded Perl 6 code
             (r'\{', embedded_perl6_callback),
+            # everything else
             ('.+?', String.Regex),
         ],
     }
